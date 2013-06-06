@@ -16,6 +16,8 @@ namespace Taskit.Web.Migrations
 		protected override void Seed(Taskit.Web.Models.DataContext context)
 		{
 			//  This method will be called after migrating to the latest version.
+            context.Database.ExecuteSqlCommand("delete from cards");
+            context.Database.ExecuteSqlCommand("delete from attributes");
 
 			context.People.AddOrUpdate(
 				p => p.Name,
