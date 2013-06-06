@@ -108,4 +108,4 @@ Backup*/
 UpgradeLog*.XML
 
 App_Data/
-src/pingme.txt
+pingme.txt

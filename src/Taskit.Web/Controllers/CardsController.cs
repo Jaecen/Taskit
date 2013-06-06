@@ -9,13 +9,37 @@ namespace Taskit.Web.Controllers
 {
 	public class CardsController : Controller
 	{
-		public ActionResult Index()
+		public ActionResult Index(string sortingAttribute = "Status")
 		{
-			IEnumerable<Card> cards;
 			using(var dataContext = new DataContext())
-				cards = dataContext.Cards.ToArray();
+			{
+				var sortableAttributes = dataContext.Attributes
+					.Select(a => a.Key)
+					.Distinct()
+					.OrderBy(a => a)
+					.ToArray();
 
-			return View(cards);
+				var cards = dataContext.Cards
+					.Select(c => new
+					{
+						Key = c.Attributes
+							.Where(a => a.Key == sortingAttribute)
+							.Select(a => a.Value)
+							.FirstOrDefault(),
+						Card = c
+					})
+					.ToLookup(o => o.Key, o => o.Card);
+
+				// TODO: We need data types on attributes to support natural sorting
+				var viewModel = new Models.Cards.Index<String>
+				{
+					SortingAttribute = sortingAttribute,
+					SortableAttributes = sortableAttributes,
+					Cards = cards,
+				};
+
+				return View(viewModel);
+			}
 		}
 	}
 }

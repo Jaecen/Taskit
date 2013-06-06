@@ -1,14 +1,47 @@
-﻿@model System.Collections.Generic.IEnumerable<Taskit.Web.Models.Card>
+﻿@model Taskit.Web.Models.Cards.Index<string>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Taskit!";
 }
 
+<style>
+	.list
+	{
+		border: solid 1px blue;
+		margin: 40px;
+		padding: 20px;
+	}
+
+	.card
+	{
+		border: solid 1px green;
+		margin: 40px;
+		padding: 20px;
+	}
+</style>
+
+
 <h1>Index</h1>
-@foreach(var card in Model)
+@using(var form = Html.BeginForm("Index", "Cards", FormMethod.Get))
 {
-	<div>
-		<h2>@card.Name</h2>
-		<p>@card.Description</p>
+	<select name="sortingAttribute" onchange="this.form.submit();">
+		@foreach(var attribute in Model.SortableAttributes)
+		{
+			<option value="@attribute" selected='@attribute == Model.SortingAttribute ? "selected" : ""'>@attribute</option>
+		}
+	</select>
+}
+
+@foreach(var grouping in Model.Cards)
+{
+	<div class="list">
+		<h2>@grouping.Key</h2>
+		@foreach(var card in grouping)
+		{
+			<div class="card">
+				<h3>@card.Name</h3>
+				<p>@card.Description</p>
+			</div>
+		}
 	</div>
 }

@@ -1,21 +1,21 @@
 namespace Taskit.Web.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+	using System;
+	using System.Data.Entity;
+	using System.Data.Entity.Migrations;
+	using System.Linq;
 	using Taskit.Web.Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Taskit.Web.Models.DataContext>
-    {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = false;
-        }
+	internal sealed class Configuration : DbMigrationsConfiguration<Taskit.Web.Models.DataContext>
+	{
+		public Configuration()
+		{
+			AutomaticMigrationsEnabled = false;
+		}
 
-        protected override void Seed(Taskit.Web.Models.DataContext context)
-        {
-            //  This method will be called after migrating to the latest version.
+		protected override void Seed(Taskit.Web.Models.DataContext context)
+		{
+			//  This method will be called after migrating to the latest version.
 
 			context.People.AddOrUpdate(
 				p => p.Name,
@@ -26,10 +26,39 @@ namespace Taskit.Web.Migrations
 
 			context.Cards.AddOrUpdate(
 				c => c.Name,
-				new Card { Name = "UI", Description = "For interfacing with users." },
-				new Card { Name = "Schema", Description = "Datification!" },
-				new Card { Name = "Code", Description = "Not sure if we really need this." }
+				new Card
+				{
+					Name = "UI",
+					Description = "For interfacing with users.",
+					Attributes = 
+					{ 
+						new Models.Attribute { Key = "Project", Value = "Taskit" },
+						new Models.Attribute { Key = "Status", Value = "In Progress" },
+						new Models.Attribute { Key = "Due Date", Value = "2014-06-21" }
+					}
+				},
+				new Card
+				{
+					Name = "Schema",
+					Description = "Datification!",
+					Attributes = 
+					{ 
+						new Models.Attribute { Key = "Project", Value = "Taskit" },
+						new Models.Attribute { Key = "Status", Value = "New" },
+						new Models.Attribute { Key = "Due Date", Value = "2014-06-30" }
+					}
+				},
+				new Card
+				{
+					Name = "Code",
+					Description = "Needs more bugs.",
+					Attributes = 
+					{ 
+						new Models.Attribute { Key = "Project", Value = "Taskit" },
+						new Models.Attribute { Key = "Status", Value = "New" },
+					}
+				}
 			);
-        }
-    }
+		}
+	}
 }

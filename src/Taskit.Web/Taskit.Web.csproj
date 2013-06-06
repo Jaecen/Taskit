@@ -126,6 +126,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attribute.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\Cards\Index.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
