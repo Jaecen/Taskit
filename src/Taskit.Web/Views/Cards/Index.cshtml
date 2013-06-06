@@ -1,0 +1,14 @@
+﻿@model System.Collections.Generic.IEnumerable<Taskit.Web.Models.Card>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Index</h1>
+@foreach(var card in Model)
+{
+	<div>
+		<h2>@card.Name</h2>
+		<p>@card.Description</p>
+	</div>
+}
