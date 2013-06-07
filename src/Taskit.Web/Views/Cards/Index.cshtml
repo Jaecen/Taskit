@@ -3,14 +3,16 @@
 @{
     ViewBag.Title = "Taskit!";
 }
-
 <script type="text/javascript">
-    if
+    //firefox made me do this - sf
+    $(function () {
+        $('#sortingAttribute').val('@Model.SortingAttribute')
+    });
 </script>
 <h1>Index</h1>
 @using(var form = Html.BeginForm("Index", "Cards", FormMethod.Get))
 {
-	<select name="sortingAttribute" onchange="this.form.submit();">
+	<select name="sortingAttribute" id="sortingAttribute" onchange="this.form.submit();">
 		@foreach(var attribute in Model.SortableAttributes)
 		{
 			<option value="@attribute" selected="@(attribute == Model.SortingAttribute ? "selected" : "")">@attribute</option>
