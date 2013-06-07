@@ -9,8 +9,12 @@ namespace Taskit.Web.Controllers
 {
 	public class CardsController : Controller
 	{
-		public ActionResult Index(string sortingAttribute = "Status")
+		public ActionResult Index(string sortingAttribute)
 		{
+
+            if (sortingAttribute == null)
+                sortingAttribute = "Status";
+
 			using(var dataContext = new DataContext())
 			{
 				var sortableAttributes = dataContext.Attributes

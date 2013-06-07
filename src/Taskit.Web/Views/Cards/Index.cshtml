@@ -4,14 +4,16 @@
     ViewBag.Title = "Taskit!";
 }
 
-
+<script type="text/javascript">
+    if
+</script>
 <h1>Index</h1>
 @using(var form = Html.BeginForm("Index", "Cards", FormMethod.Get))
 {
 	<select name="sortingAttribute" onchange="this.form.submit();">
 		@foreach(var attribute in Model.SortableAttributes)
 		{
-			<option value="@attribute" selected='@attribute == Model.SortingAttribute ? "selected" : ""'>@attribute</option>
+			<option value="@attribute" selected="@(attribute == Model.SortingAttribute ? "selected" : "")">@attribute</option>
 		}
 	</select>
 }
