@@ -20,8 +20,11 @@ cardList {
 
 .cardList {
     position: relative;
-    min-height: 50px;
+    min-height: 150px;
 }
 .ui-draggable {
     cursor: move;
+}
+.ui-sortable-helper {
+    transform: rotate(3deg);
 }

@@ -9,14 +9,9 @@
         $('#sortingAttribute').val('@Model.SortingAttribute');
 
         $('.cardList').sortable({
-            revert: true
+            revert: true,
+            connectWith: '.cardList'
         });
-
-        $('.card').draggable({
-            connectToSortable: ".cardList",
-            revert: "invalid"
-        });
-
     });
 </script>
 <h1>Index</h1>
