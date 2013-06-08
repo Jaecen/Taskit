@@ -28,3 +28,6 @@ cardList {
 .ui-sortable-helper {
     transform: rotate(3deg);
 }
+.inlineHeader {
+    display:inline;
+}

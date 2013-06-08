@@ -3,47 +3,51 @@
 @{
     ViewBag.Title = "Taskit!";
 }
-<script type="text/javascript">
-    $(function () {
-        //firefox saves the last selection so you need to manaully set he select box.
-        $('#sortingAttribute').val('@Model.SortingAttribute');
+    <script type="text/javascript">
+        $(function () {
+            //firefox saves the last selection so you need to manaully set he select box.
+            $('#sortingAttribute').val('@Model.SortingAttribute');
 
-        $('.cardList').sortable({
-            revert: true,
-            connectWith: '.cardList'
+            $('.cardList').sortable({
+                revert: true,
+                connectWith: '.cardList',
+                stop: function (event, ui) {
+                    console.log('time to save the card');
+                }
+            });
         });
-    });
-</script>
-<h1>Index</h1>
+    </script>
 
-
-@using(var form = Html.BeginForm("Index", "Cards", FormMethod.Get))
-{
-	<select name="sortingAttribute" id="sortingAttribute" onchange="this.form.submit();">
-		@foreach(var attribute in Model.SortableAttributes)
-		{
-			<option value="@attribute" selected="@(attribute == Model.SortingAttribute ? "selected" : "")">@attribute</option>
-		}
-	</select>
-}
-<div class="row-fluid">
-
-
-@foreach(var grouping in Model.Cards)
-{
-	<div class="span3">
-	    <div class="list">
-		    <h2>@grouping.Key</h2>
-            <div class="cardList">
-		    @foreach(var card in grouping)
-		    {
-			    <div class="card">
-				    <h3>@card.Name</h3>
-				    <p>@card.Description</p>
-			    </div>
-		    }
-            </div>
-	    </div>
+    <div class="pageTitle span2">  <h1 class="inlineHeader">Cards</h1></div>
+    <div class=" span10">
+        <div class="filterForm">
+                @using (var form = Html.BeginForm("Index", "Cards", FormMethod.Get))
+                {
+                    <select name="sortingAttribute" id="sortingAttribute" onchange="this.form.submit();">
+                        @foreach (var attribute in Model.SortableAttributes)
+                        {
+                            <option value="@attribute" selected="@(attribute == Model.SortingAttribute ? "selected" : "")">@attribute</option>
+                        }
+                    </select>
+                }
+        </div>
     </div>
-}
-</div>
+    <div class="row-fluid">
+    @foreach(var grouping in Model.Cards)
+    {
+	    <div class="span3">
+	        <div class="list">
+		        <h2>@grouping.Key</h2>
+                <div class="cardList">
+		        @foreach(var card in grouping)
+		        {
+			        <div class="card">
+				        <h3>@card.Name</h3>
+				        <p>@card.Description</p>
+			        </div>
+		        }
+                </div>
+	        </div>
+        </div>
+    }
+    </div>

@@ -1,7 +1,4 @@
-﻿@using System.Web.Optimization
-
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -9,12 +6,11 @@
         @Styles.Render("~/Content/css")
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-        
 </head>
 <body>
-    <header>
-        <h1>Taskit</h1>
-        <p>Task + Basket. Get it? Yeah me neither</p>
+    <header class="container-fluid">
+        <h1 class="inlineHeader">Taskit</h1>
+        <span class="slogan">Task + Basket. Get it? Yeah me neither</span>
     </header>
     <div class="container-fluid">
         @RenderBody()
