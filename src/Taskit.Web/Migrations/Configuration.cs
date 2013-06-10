@@ -16,8 +16,8 @@ namespace Taskit.Web.Migrations
 		protected override void Seed(Taskit.Web.Models.DataContext context)
 		{
 			//  This method will be called after migrating to the latest version.
-            context.Database.ExecuteSqlCommand("delete from cards");
             context.Database.ExecuteSqlCommand("delete from attributes");
+            context.Database.ExecuteSqlCommand("delete from cards");
 
 			context.People.AddOrUpdate(
 				p => p.Name,
@@ -57,7 +57,7 @@ namespace Taskit.Web.Migrations
 					Attributes = 
 					{ 
 						new Models.Attribute { Key = "Project", Value = "Taskit" },
-						new Models.Attribute { Key = "Status", Value = "New" },
+						new Models.Attribute { Key = "Status", Value = "Complete" },
 					}
 				}
 			);
