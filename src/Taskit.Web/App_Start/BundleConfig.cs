@@ -14,6 +14,10 @@ namespace Taskit.Web
                         "~/Content/css/bootstrap-responsive.css",
                         "~/Content/css/jquery-ui.css"
                         ));
+
+            bundles.Add(new ScriptBundle("~/Content/js").Include(
+                "~/Content/js/bootstrap-modal.js"
+                ));
         }
     }
 }

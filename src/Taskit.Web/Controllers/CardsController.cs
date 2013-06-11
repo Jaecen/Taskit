@@ -45,5 +45,14 @@ namespace Taskit.Web.Controllers
 				return View(viewModel);
 			}
 		}
+
+        public ActionResult Edit(int Id)
+        {
+            using(var dataContext = new DataContext())
+            {
+                var card = dataContext.Cards.FirstOrDefault(c => c.Id == Id);
+                return PartialView(card);
+            }
+        }
 	}
 }
