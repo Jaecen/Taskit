@@ -3,7 +3,12 @@
 	ViewBag.Title = "Taskit!";
 }
 
+<script type="text/javascript" src="~/Content/Cards-Index.js"></script>
 <script type="text/javascript">
+	window.links = {
+		'updateCardAttribute': '@Url.Action("UpdateCardAttribute", "Cards")',
+		'updateCardDisplayOrder': '@Url.Action("UpdateCardDisplayOrder", "Cards")'
+	};
 </script>
 
 <div class="pageTitle span2">
