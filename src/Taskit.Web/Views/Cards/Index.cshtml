@@ -1,53 +1,75 @@
 ﻿@model Taskit.Web.Models.Cards.Index<string>
 
 @{
-    ViewBag.Title = "Taskit!";
+	ViewBag.Title = "Taskit!";
 }
-    <script type="text/javascript">
-        $(function () {
-            //firefox saves the last selection so you need to manaully set he select box.
-            $('#sortingAttribute').val('@Model.SortingAttribute');
+<script type="text/javascript">
+	$(function () {
+		//firefox saves the last selection so you need to manaully set he select box.
+		$('#sortingAttribute').val('@Model.SortingAttribute');
 
-            $('.cardList').sortable({
-                revert: true,
-                connectWith: '.cardList',
-                stop: function (event, ui) {
-                    console.log('time to save the card');
-                }
+        	$('.cardList').sortable({
+        		revert: true,
+        		connectWith: '.cardList',
+        		receive: function (event, ui) {
+        			var cardId = ui.item.data('card-id');
+        			var attributeKey = $(this).data("attribute-key");
+        			var attributeValue = $(this).data("attribute-value");
+
+        			$.post('@Url.Action("UpdateCardAttribute", "Cards")', {
+                		'cardId': cardId,
+                		'attributeKey': attributeKey,
+                		'attributeValue': attributeValue
+                	})
+                },
+        		update: function (event, ui) {
+        			//console.log(this, event, ui);
+        			var cardId = ui.item.data('card-id');
+        			var previousCardId = ui.item.prev('.card').first().data('card-id');
+        			var attributeKey = $(this).data("attribute-key");
+
+        			$.post('@Url.Action("UpdateCardDisplayOrder", "Cards")', {
+        				'cardId': cardId,
+        				'previousCardId': previousCardId,
+						'attributeKey': attributeKey
+        			})
+            	}
             });
         });
-    </script>
+</script>
 
-    <div class="pageTitle span2">  <h1 class="inlineHeader">Cards</h1></div>
-    <div class=" span10">
-        <div class="filterForm">
-                @using (var form = Html.BeginForm("Index", "Cards", FormMethod.Get))
-                {
-                    <select name="sortingAttribute" id="sortingAttribute" onchange="this.form.submit();">
-                        @foreach (var attribute in Model.SortableAttributes)
-                        {
-                            <option value="@attribute" selected="@(attribute == Model.SortingAttribute ? "selected" : "")">@attribute</option>
-                        }
-                    </select>
-                }
-        </div>
-    </div>
-    <div class="row-fluid">
-    @foreach(var grouping in Model.Cards)
-    {
-	    <div class="span3">
-	        <div class="list">
-		        <h2>@grouping.Key</h2>
-                <div class="cardList">
-		        @foreach(var card in grouping)
-		        {
-			        <div class="card">
-				        <h3>@card.Name</h3>
-				        <p>@card.Description</p>
-			        </div>
-		        }
-                </div>
-	        </div>
-        </div>
-    }
-    </div>
+<div class="pageTitle span2">
+	<h1 class="inlineHeader">Cards</h1>
+</div>
+<div class=" span10">
+	<div class="filterForm">
+		@using(var form = Html.BeginForm("Index", "Cards", FormMethod.Get))
+  {
+			<select name="sortingAttribute" id="sortingAttribute" onchange="this.form.submit();">
+				@foreach(var attribute in Model.SortableAttributes)
+	{
+					<option value="@attribute" selected="@(attribute == Model.SortingAttribute ? "selected" : "")">@attribute</option>
+	}
+			</select>
+  }
+	</div>
+</div>
+<div class="row-fluid">
+	@foreach(var attribute in Model.Cards)
+ {
+		<div class="span3">
+			<div class="list">
+				<h2>@attribute.Key</h2>
+				<div class="cardList" data-attribute-key="@Model.SortingAttribute" data-attribute-value="@attribute.Key">
+					@foreach(var card in attribute)
+	 {
+						<div class="card" data-card-id="@card.Id">
+							<h3>@card.Name</h3>
+							<p>@card.Description</p>
+						</div>
+	 }
+				</div>
+			</div>
+		</div>
+ }
+</div>

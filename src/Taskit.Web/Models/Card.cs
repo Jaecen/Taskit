@@ -10,8 +10,8 @@ namespace Taskit.Web.Models
 		public int Id { get; set; }
 		public virtual string Name { get; set; }
 		public virtual string Description { get; set; }
-		public virtual ICollection<Attribute> Attributes { get; set; }
-		public virtual ICollection<Person> People { get; set; }
+		public virtual ICollection<Attribute> Attributes { get; protected set; }
+		public virtual ICollection<Person> People { get; protected set; }
 
 		public Card()
 		{
