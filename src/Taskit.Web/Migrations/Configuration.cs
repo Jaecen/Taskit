@@ -16,8 +16,8 @@ namespace Taskit.Web.Migrations
 		protected override void Seed(Taskit.Web.Models.DataContext context)
 		{
 			//  This method will be called after migrating to the latest version.
-            context.Database.ExecuteSqlCommand("delete from attributes");
-            context.Database.ExecuteSqlCommand("delete from cards");
+			context.Database.ExecuteSqlCommand("delete from attributes");
+			context.Database.ExecuteSqlCommand("delete from cards");
 
 			context.People.AddOrUpdate(
 				p => p.Name,
@@ -34,9 +34,9 @@ namespace Taskit.Web.Migrations
 					Description = "For interfacing with users.",
 					Attributes = 
 					{ 
-						new Models.Attribute { Key = "Project", Value = "Taskit" },
-						new Models.Attribute { Key = "Status", Value = "In Progress" },
-						new Models.Attribute { Key = "Due Date", Value = "2014-06-21" }
+						new Models.Attribute { Key = "Project", Value = "Taskit", DisplayOrder = 0 },
+						new Models.Attribute { Key = "Status", Value = "In Progress", DisplayOrder = 1 },
+						new Models.Attribute { Key = "Due Date", Value = "2014-06-21", DisplayOrder = 2 }
 					}
 				},
 				new Card
@@ -45,9 +45,9 @@ namespace Taskit.Web.Migrations
 					Description = "Datification!",
 					Attributes = 
 					{ 
-						new Models.Attribute { Key = "Project", Value = "Taskit" },
-						new Models.Attribute { Key = "Status", Value = "New" },
-						new Models.Attribute { Key = "Due Date", Value = "2014-06-30" }
+						new Models.Attribute { Key = "Project", Value = "Taskit", DisplayOrder = 0 },
+						new Models.Attribute { Key = "Status", Value = "New", DisplayOrder = 1 },
+						new Models.Attribute { Key = "Due Date", Value = "2014-06-30", DisplayOrder = 2 }
 					}
 				},
 				new Card
@@ -56,8 +56,8 @@ namespace Taskit.Web.Migrations
 					Description = "Needs more bugs.",
 					Attributes = 
 					{ 
-						new Models.Attribute { Key = "Project", Value = "Taskit" },
-						new Models.Attribute { Key = "Status", Value = "Complete" },
+						new Models.Attribute { Key = "Project", Value = "Taskit", DisplayOrder = 0 },
+						new Models.Attribute { Key = "Status", Value = "Complete", DisplayOrder = 1 },
 					}
 				}
 			);

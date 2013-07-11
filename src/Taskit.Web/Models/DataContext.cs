@@ -8,8 +8,8 @@ namespace Taskit.Web.Models
 {
 	public class DataContext : DbContext
 	{
-		public IDbSet<Person> People { get; set; }
-		public IDbSet<Card> Cards { get; set; }
-		public IDbSet<Attribute> Attributes { get; set; }
+		public IDbSet<Person> People { get { return Set<Person>(); } }
+		public IDbSet<Card> Cards { get { return Set<Card>(); } }
+		public IDbSet<Attribute> Attributes { get { return Set<Attribute>(); } }
 	}
 }

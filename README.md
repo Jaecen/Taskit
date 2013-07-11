@@ -1,4 +1,4 @@
 Taskit
 ======
 
-Takerific team management
+Taskerific team management

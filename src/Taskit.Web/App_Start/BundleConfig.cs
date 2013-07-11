@@ -16,7 +16,7 @@ namespace Taskit.Web
                         ));
 
             bundles.Add(new ScriptBundle("~/Content/js").Include(
-                "~/Content/js/bootstrap-modal.js"
+                "~/Content/js/bootstrap/bootstrap-modal.js"
                 ));
         }
     }

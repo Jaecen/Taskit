@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Taskit.Web.Models;
@@ -12,7 +13,7 @@ namespace Taskit.Web.Controllers
 		public ActionResult Index(string sortingAttribute)
 		{
 
-            if (sortingAttribute == null)
+			if(sortingAttribute == null)
                 sortingAttribute = "Status";
 
 			using(var dataContext = new DataContext())
@@ -28,14 +29,16 @@ namespace Taskit.Web.Controllers
 					{
 						Key = c.Attributes
 							.Where(a => a.Key == sortingAttribute)
-							.Select(a => a.Value)
 							.FirstOrDefault(),
-						Card = c
+						Card = c,
 					})
-					.ToLookup(o => o.Key, o => o.Card);
+					.OrderBy(o => o.Key.DisplayOrder)
+					.ToLookup(
+						o => o.Key == null ? null : o.Key.Value,
+						o => o.Card
+					);
 
-				// TODO: We need data types on attributes to support natural sorting
-				var viewModel = new Models.Cards.Index<String>
+				var viewModel = new Models.Cards.Index<string>
 				{
 					SortingAttribute = sortingAttribute,
 					SortableAttributes = sortableAttributes,
@@ -43,6 +46,62 @@ namespace Taskit.Web.Controllers
 				};
 
 				return View(viewModel);
+			}
+		}
+
+		[HttpPost]
+		public ActionResult UpdateCardAttribute(int cardId, string attributeKey, string attributeValue)
+		{
+			using(var dataContext = new DataContext())
+			{
+				var attribute = dataContext.Cards
+					.Where(c => c.Id == cardId)
+					.SelectMany(c => c.Attributes)
+					.Where(a => a.Key == attributeKey)
+					.FirstOrDefault();
+
+				if(attribute == null)
+					return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+				attribute.Value = attributeValue;
+				dataContext.SaveChanges();
+				return new HttpStatusCodeResult(HttpStatusCode.OK);
+			}
+		}
+
+		[HttpPost]
+		public ActionResult UpdateCardDisplayOrder(int cardId, int? previousCardId, string attributeKey)
+		{
+			using(var dataContext = new DataContext())
+			{
+				var attribute = dataContext.Cards
+					.Where(c => c.Id == cardId)
+					.SelectMany(c => c.Attributes)
+					.Where(a => a.Key == attributeKey)
+					.FirstOrDefault();
+
+				if(attribute == null)
+					return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
+				var previousAttributeDisplayIndex = dataContext.Cards
+					.Where(c => c.Id == previousCardId)
+					.SelectMany(c => c.Attributes)
+					.Where(a => a.Key == attributeKey)
+					.Select(a => a.DisplayOrder)
+					.DefaultIfEmpty(-1)
+					.FirstOrDefault();
+
+				attribute.DisplayOrder = previousAttributeDisplayIndex + 1;
+
+				foreach(var followingAttribute in dataContext.Attributes
+					.Where(a => a.Key == attributeKey)
+					.Where(a => a.DisplayOrder > previousAttributeDisplayIndex))
+				{
+					followingAttribute.DisplayOrder += 1;
+				}
+
+				dataContext.SaveChanges();
+				return new HttpStatusCodeResult(HttpStatusCode.OK);
 			}
 		}
 
