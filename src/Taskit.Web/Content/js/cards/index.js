@@ -28,8 +28,8 @@
 			})
 		}
 	});
+
 	$('.cardName').click(function (event) {
-	    console.log('wtf!');
 	    $('#editCardModal').modal({ remote: this.href });
 	    event.preventDefault();
 	});
