@@ -54,5 +54,29 @@ namespace Taskit.Web.Controllers
                 return PartialView(card);
             }
         }
+
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection formCollection)
+        {
+            using (var dataContext = new DataContext())
+            {
+                var card = dataContext.Cards.Find(id);
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        UpdateModel(card);
+                        dataContext.SaveChanges();
+                        return PartialView(card);
+                    }
+                    catch
+                    {
+                        return Content("something horrible happened. Sorry about that. Best to just move on.");
+                    }
+                }
+                return PartialView(card);
+            }
+
+        }
 	}
 }

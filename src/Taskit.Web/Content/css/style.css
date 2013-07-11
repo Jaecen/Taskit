@@ -1,14 +1,8 @@
-﻿
-
-
-.list {
+﻿.list {
     background: #eee;
     padding: 20px;
     margin-bottom: 10px;
     border: solid 1px #ccc;
-}
-cardList {
-    padding: 10px 0px;
 }
 
 .card {
@@ -30,4 +24,10 @@ cardList {
 }
 .inlineHeader {
     display:inline;
+}
+.modalFormBody {
+    padding: 0;
+}
+.modalInnerBody {
+    padding: 15px;
 }

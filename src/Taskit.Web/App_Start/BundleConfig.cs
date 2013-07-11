@@ -9,10 +9,10 @@ namespace Taskit.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/css/style.css",
                         "~/Content/css/bootstrap.css",
                         "~/Content/css/bootstrap-responsive.css",
-                        "~/Content/css/jquery-ui.css"
+                        "~/Content/css/jquery-ui.css",
+                        "~/Content/css/style.css" //keep this last
                         ));
 
             bundles.Add(new ScriptBundle("~/Content/js").Include(
