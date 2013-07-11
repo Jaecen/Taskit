@@ -11,7 +11,7 @@
             @Html.LabelFor(model => model.Name)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
+            @Html.TextBoxFor(model => model.Name, new { @class="input-block-level" })
             @Html.ValidationMessageFor(model => model.Name)
         </div>
 
@@ -19,7 +19,7 @@
             @Html.LabelFor(model => model.Description)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
+            @Html.TextAreaFor(model => model.Description, new { @class="input-block-level" })
             @Html.ValidationMessageFor(model => model.Description)
         </div>
     </div>
